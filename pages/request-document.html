@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/request-doc.css">
+</head>
+<body>
+
+<h2>Request Document</h2>
+
+<!-- Display Resident Name -->
+<p id="resident-name">Loading...</p>
+
+<!-- Request Document Button  -->
+<button id="open-modal-btn" class="request-btn">
+  <span class="icon">📄</span> Request Document
+</button>
+
+<!-- Modal Structure -->
+<dialog id="request-modal">
+  <form id="request-form">
+    <h2>Request Document</h2>
+
+    <!-- Document Type Selection -->
+    <label for="document-type">Select Document Type:</label>
+    <select id="document-type" required>
+        <option value="">--Please choose an option--</option>
+        <option value="Barangay Clearance">Barangay Clearance</option>
+        <option value="Certificate of Residency">Certificate of Residency</option>
+        <option value="Indigency Certificate">Indigency Certificate</option>
+        <option value="Barangay ID">Barangay ID</option>
+        <option value="Others">Others</option>
+    </select>
+
+    <!-- Custom Document Type Input (Hidden by Default) -->
+    <div id="custom-document-type-container" style="display: none;">
+        <label for="custom-document-type">Specify Document Type:</label>
+        <input type="text" id="custom-document-type" placeholder="Enter document type">
+    </div>
+
+    <!-- Reason/Purpose Input (Now below Document Type) -->
+    <label for="request-note">Reason/Purpose:</label>
+    <textarea id="request-note" placeholder="Enter the reason for requesting this document..." required></textarea>
+
+    <!-- Submit and Close Buttons -->
+    <div>
+      <button type="submit">Submit Request</button>
+      <button type="button" id="close-modal-btn">Close</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Pending Requests Section -->
+<h3>Pending Requests</h3>
+<div class="requests-container">
+    <table>
+      <thead>
+        <tr>
+            <th>Resident Name</th>
+            <th>Document Type</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th> <!-- New column for Edit & Cancel -->
+        </tr>
+    </thead>
+    <tbody id="pending-requests-body">
+        <!-- Pending requests will be loaded here -->
+    </tbody>
+    
+    </table>
+</div>
+
+<!-- Approved/Rejected Requests Section -->
+<h3>Approved & Rejected Requests</h3>
+<div class="requests-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Resident Name</th>
+                <th>Document Type</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Requested at</th>
+                <th>Approved/Rejected at</th>
+                <th>Captain's Comment</th>
+            </tr>
+        </thead>        
+        <tbody id="completed-requests-body">
+            <!-- Approved & Rejected Requests will be loaded here -->
+        </tbody>
+    </table>
+</div>
+
+<dialog id="edit-request-modal">
+  <form id="edit-request-form">
+      <h2>Edit Document Request</h2>
+      <input type="hidden" id="edit-request-id">
+      
+      <label for="edit-document-type">Select Document Type:</label>
+      <select id="edit-document-type" required>
+          <option value="Barangay Clearance">Barangay Clearance</option>
+          <option value="Certificate of Residency">Certificate of Residency</option>
+          <option value="Indigency Certificate">Indigency Certificate</option>
+          <option value="Barangay ID">Barangay ID</option>
+          <option value="Others">Others</option>
+      </select>
+
+      <div id="edit-custom-document-type-container" style="display: none;">
+          <label for="edit-custom-document-type">Specify Document Type:</label>
+          <input type="text" id="edit-custom-document-type">
+      </div>
+
+      <label for="edit-request-note">Reason/Purpose:</label>
+      <textarea id="edit-request-note" required></textarea>
+
+      <div>
+          <button type="submit">Save Changes</button>
+          <button type="button" id="close-edit-modal-btn">Close</button>
+      </div>
+  </form>
+</dialog>
+
+<a href="dashboard-resident.html">Back</a>
+
+<script type="module" src="../js/request-document.js"></script>
+
+</body>
+</html>

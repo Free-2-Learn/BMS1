@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captain Announcements</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/post-ann.css">
+    <link rel="stylesheet" href="../css/edit-post-ann.css">
+    <link rel="stylesheet" href="../css/dispay-ann.css">
+
+</head>
+<body>
+
+    
+<!-- Back to Dashboard -->
+<a id="back-button" href="dashboard-captain.html">Back</a>
+
+    <!-- Input Field (Only for Captain) -->
+<div id="announcement-form-container">
+    <h3>Post an Announcement</h3>
+    <div id="announcement-form">
+        <textarea id="announcement-input" placeholder="Write an announcement..." required></textarea>
+
+        <!-- Custom File Upload Button -->
+        <button type="button" id="custom-file-button">Choose Images</button>
+        <input type="file" id="announcement-image" accept="image/*" multiple style="display: none;">
+        <span id="file-name" style="display: none;"></span>
+
+        <!-- Preview selected images -->
+        <div id="image-preview"></div>
+
+        <button id="post-announcement">Post</button>
+    </div>
+</div>
+
+
+<h2>Announcements</h2>
+
+<!-- Display Announcements -->
+<ul id="announcement-list"></ul>
+
+<!-- Load More Button -->
+<button id="load-more" style="display: none;">Load More</button>
+
+<!--  Edit Modal -->
+<div id="edit-modal" class="edit-modal">
+    <div class="edit-modal-content">
+        <span class="close-modal">&times;</span>
+        
+        <!-- Profile and Header -->
+        <div class="edit-header">
+            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='gray'><circle cx='12' cy='8' r='4'/><path d='M2 20c0-4 4-7 10-7s10 3 10 7'/></svg>" class="profile-pic">
+
+
+            <h3>Edit Post</h3>
+        </div>
+        
+        <!-- Post Text -->
+        <textarea id="edit-text" placeholder="What's on your mind?" rows="4"></textarea>
+        
+        <!-- Image Preview Area -->
+        <div id="edit-image-preview" class="image-preview"></div>
+        
+        <!-- Upload Button -->
+        <label for="edit-image-input" class="upload-btn">+ Add Photos</label>
+        <input type="file" id="edit-image-input" accept="image/*" multiple style="display: none;">
+
+        <!-- Action Buttons -->
+        <div class="edit-footer">
+            <button id="save-edit" class="post-btn">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<div id="image-modal">
+    <button id="close-btn" onclick="closeImageModal()">X</button>
+    <button id="prev-btn" onclick="prevImage()">&#10094;</button>
+    <img id="modal-image">
+    <button id="next-btn" onclick="nextImage()">&#10095;</button>
+</div>
+
+<script type="module" src="../js/captain-announcements.js"></script>
+
+<script type="module">
+    import { openImageModal, closeImageModal, prevImage, nextImage } from "../js/captain-announcements.js";
+    window.openImageModal = openImageModal;
+    window.closeImageModal = closeImageModal;
+    window.prevImage = prevImage;
+    window.nextImage = nextImage;
+</script>
+
+</body>
+</html>

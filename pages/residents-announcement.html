@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Announcements</title>
+    <script type="module" src="../js/residents-announcements.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/display-ann-resident.css"> 
+
+</head>
+<body>
+
+<!-- Back to Dashboard -->
+<a id="back-button" href="dashboard-resident.html">Back</a>
+
+<h2>Announcements</h2>
+
+<!-- Announcements Container -->
+<div id="announcement-list"></div>
+
+<!-- Load More Button -->
+<button id="load-more" style="display: none;">Load More</button>
+
+<!-- Image Modal for Viewing Images -->
+<div id="image-modal" class="hidden">
+    <button id="close-btn" onclick="closeImageModal()">X</button>
+    <button id="prev-btn" onclick="prevImage()">&#10094;</button>
+    <img id="modal-image">
+    <button id="next-btn" onclick="nextImage()">&#10095;</button>
+</div>
+
+<script type="module">
+    import { auth } from "../firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    import { db } from "../firebase-config.js";
+
+    // ✅ Function to check if the user is a resident
+    async function isResident(user) {
+        if (!user) return false;
+        const residentRef = doc(db, "residents", user.email);
+        const residentSnap = await getDoc(residentRef);
+        return residentSnap.exists();
+    }
+
+    // ✅ Handle Authentication First
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            console.warn("🚫 No user logged in. Redirecting to login.");
+            window.location.href = "../index.html";
+            return;
+        }
+
+        const isUserResident = await isResident(user);
+
+        if (!isUserResident) {
+            console.warn("🚫 Unauthorized access. Redirecting...");
+            await signOut(auth);
+            window.location.href = "../index.html";
+            return;
+        }
+
+        console.log("✅ User verified as Resident.");
+    });
+</script>
+
+<script type="module">
+    import { openImageModal, closeImageModal, prevImage, nextImage } from "../js/residents-announcements.js";
+    
+    window.openImageModal = openImageModal;
+    window.closeImageModal = closeImageModal;
+    window.prevImage = prevImage;
+    window.nextImage = nextImage;
+</script>
+
+</body>
+</html>

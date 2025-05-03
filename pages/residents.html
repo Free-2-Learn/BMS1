@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Residents</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="module" src="../js/residents.js"></script>
+
+</head>
+<body>
+
+  <div class="resident-counters">
+    <p>Total Residents: <span id="total-residents">0</span></p>
+    <p>Active Residents: <span id="active-residents">0</span></p>
+    <p>Inactive Residents: <span id="inactive-residents">0</span></p>
+</div>
+
+<h2>Manage Residents</h2>
+
+<!-- Search Bar -->
+<input type="text" id="search-bar" placeholder="Search residents..." onkeyup="searchResidents()">
+
+<!-- Residents Table -->
+<table>
+  <thead>
+        <tr>
+          <th>#</th> 
+          <th onclick="toggleSorting()" style="cursor: pointer;">
+              Full Name <span id="sortIcon">▲</span>
+          </th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Age</th>
+          <th>Birthdate</th>
+          <th>Gender</th>
+          <th>Civil Status</th>
+          <th>Contact Number</th>
+          <th>Address</th>
+          <th>Occupation</th>
+          <th>Educational Attainment</th>
+          <th>Special Categories</th>
+          <th>Voter Info</th>
+          <th>Status</th>
+          <th>Actions</th>
+      </tr>
+  </thead>
+  <tbody id="resident-body">
+      <!-- Residents will be loaded here -->
+  </tbody>
+</table>
+
+<!-- Edit Resident Modal -->
+<div id="editResidentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Resident</h2>
+      </div>
+      <div class="modal-body">
+        <form id="edit-resident-form">
+          <input type="hidden" id="edit-resident-id"> <!-- Store Resident ID -->
+          
+          <label>First Name:</label>
+          <input type="text" id="edit-first-name" required>
+          
+          <label>Middle Name:</label>
+          <input type="text" id="edit-middle-name">
+          
+          <label>Last Name:</label>
+          <input type="text" id="edit-last-name" required>
+          
+          <label>Age:</label>
+          <input type="number" id="edit-age" required min="0">
+  
+          <label>Birthdate:</label>
+          <input type="date" id="edit-birthdate" required>
+  
+          <label>Gender:</label>
+          <select id="edit-gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+  
+          <label>Civil Status:</label>
+          <select id="edit-civil-status" required>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Widowed">Widowed</option>
+            <option value="Separated">Separated</option>
+          </select>
+  
+          <label>Contact Number:</label>
+          <input type="tel" id="edit-contact-number" class="phone-input" required placeholder="+63 XXXXXXXXXX" maxlength="14">
+          
+          <label>Address:</label>
+          <input type="text" id="edit-address" required>
+  
+          <label>Occupation:</label>
+          <input type="text" id="edit-occupation">
+  
+          <label>Education:</label>
+          <select id="edit-education" required>
+            <option value="Elementary">Elementary</option>
+            <option value="High School">High School</option>
+            <option value="College">College</option>
+            <option value="Vocational">Vocational</option>
+            <option value="Postgraduate">Postgraduate</option>
+          </select>
+  
+          <label>Special Categories:</label>
+          <select id="edit-special-categories">
+            <option value="None">None</option>
+            <option value="Senior Citizen">Senior Citizen</option>
+            <option value="PWD">PWD</option>
+            <option value="4Ps Beneficiary">4Ps Beneficiary</option>
+          </select>
+  
+          <label>Voter Info:</label>
+          <input type="text" id="edit-voter-info">
+  
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- Button to Open Add Resident Modal -->
+<button id="openAddResidentModal">Add Resident</button>
+
+<!-- Add Resident Modal -->
+<div id="addResidentModal" class="modal">
+  <div class="modal-content add-resident-modal">
+    <div class="modal-header">
+      <span class="close" onclick="closeAddResidentModal()">&times;</span>
+      <h2>Add Resident</h2>
+    </div>
+    <div class="modal-body">
+      <form id="add-resident-form">
+        <label>First Name:</label>
+        <input type="text" id="first-name" required>
+
+        <label>Last Name:</label>
+        <input type="text" id="last-name" required>
+
+        <label>Middle Name:</label>
+        <input type="text" id="middle-name">
+
+        <label>Age:</label>
+        <input type="number" id="age" required min="0">
+
+        <label>Birthdate:</label>
+        <input type="date" id="birthdate" required>
+
+        <label>Gender:</label>
+        <select id="gender" required>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label>Civil Status:</label>
+        <select id="civil-status" required>
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+          <option value="Widowed">Widowed</option>
+          <option value="Separated">Separated</option>
+        </select>
+
+        <label>Contact Number:</label>
+        <input type="tel" id="contact-number" class="phone-input" required placeholder="+63 XXXXXXXXXX" maxlength="14">
+        
+        <label>Address:</label>
+        <input type="text" id="address" required>
+
+        <label>Occupation:</label>
+        <input type="text" id="occupation">
+
+        <label>Education:</label>
+        <select id="education" required>
+          <option value="Elementary">Elementary</option>
+          <option value="High School">High School</option>
+          <option value="College">College</option>
+          <option value="Vocational">Vocational</option>
+          <option value="Postgraduate">Postgraduate</option>
+        </select>
+
+        <label>Special Categories:</label>
+        <select id="special-categories">
+          <option value="None">None</option>
+          <option value="Senior Citizen">Senior Citizen</option>
+          <option value="PWD">PWD</option>
+          <option value="4Ps Beneficiary">4Ps Beneficiary</option>
+        </select>
+
+        <label>Voter Info:</label>
+        <input type="text" id="voter-info">
+
+        <button type="submit" id="submitAddResident">
+          <span id="addResidentText">Add Resident</span>
+          <span id="addResidentLoader" class="loader" style="display: none;"></span>
+      </button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<a href="dashboard-captain.html">Back</a>
+
+</body>
+</html>
