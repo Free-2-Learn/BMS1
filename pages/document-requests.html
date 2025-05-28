@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Requests</title>
+  <link rel="stylesheet" href="../css/doc-request.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script type="module" src="../js/document-requests.js"></script>
+
+</head>
+
+<body>
+    <div class="requests-container">
+      <h2>Pending Requests</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Resident Name</th>
+            <th>Document Type</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>
+                Date Requested
+                <button type="button" id="sortToggleBtn" onclick="toggleSortPending()" title="Sort by Date">🔽</button>
+            </th>                                       
+            <th>Approve/Reject</th>
+          </tr>
+        </thead>
+        <tbody id="pending-requests"></tbody>
+      </table>
+    </div>
+  
+    <div class="requests-container">
+      <h2>Processed Requests</h2>
+      <table>
+        <thead>
+            <tr>
+              <th>Resident Name</th>
+              <th>Document Type</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>
+                Date Requested
+                <button type="button" id="sortToggleBtn1" onclick="toggleSortProcessed()" title="Sort by Date">🔽</button>
+              </th>
+              <th>Approved/Rejected Date</th>
+              <th>Captain's Comment</th>
+            </tr>
+        </thead>          
+        <tbody id="processed-requests"></tbody>
+      </table>
+    </div>
+  
+    <a href="dashboard-captain.html" class="request-btn" style="margin-left: 20px;">Back</a>
+  
+
+    <!-- Reason Modal -->
+    <div id="reason-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <h3 id="modal-title">Reason for Action</h3>
+          <!-- Resident name displayed here -->
+          <p id="resident-name" style="font-weight: bold; margin-top: 10px;"></p>
+          <p>Provide a reason for <span id="action-type">this action</span> (optional):</p>
+          <textarea id="action-reason" placeholder="Type your reason here..." style="width:100%; height:100px; margin-top:10px;"></textarea>
+          <div style="margin-top: 20px; text-align: right;">
+            <button class="request-btn" onclick="confirmAction()">Confirm</button>
+            <button class="request-btn" style="background:#aaa;" onclick="closeReasonModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      
+  </body>
+  
+</html>

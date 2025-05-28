@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resident Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script type="module" src="../js/resident-profile.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    /* Video Background */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Dark overlay for readability */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: -1;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dashboard-container {
+      max-width: 900px;
+      width: 100%;
+      background: transparent;
+      padding: 40px 50px;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      margin-top: -80px;
+    }
+
+    /* Glow on logo */
+    .dashboard-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px auto;
+      display: block;
+      border: 2px solid white;
+      box-shadow: 0 0 15px 4px #00aaff;
+    }
+
+    /* Glowing text */
+    h2 {
+      color: white;
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 4rem;
+      letter-spacing: 1.2px;
+      text-shadow:
+        0 0 5px #00cfff,
+        0 0 10px #00cfff,
+        0 0 20px #00aaff,
+        0 0 30px #00aaff,
+        0 0 40px #00aaff;
+    }
+
+    #welcome-text {
+      color: white;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+      text-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00cccc;
+    }
+
+    /* Container for all 4 buttons */
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: nowrap;
+      margin-bottom: 40px;
+    }
+
+    /* Style for all buttons and links in the row */
+    .button-row a,
+    .button-row button {
+      width: 160px;
+      height: 160px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow:
+        0 0 8px #3498db,
+        0 0 16px #3498db;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .button-row a:hover,
+    .button-row button:hover {
+      background-color: #2168a3;
+      box-shadow:
+        0 0 12px #007acc,
+        0 0 24px #007acc;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop id="bg-video">
+    <source src="../images2/backgroundresident.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="overlay"></div>
+
+  <!-- Dashboard -->
+  <div class="dashboard-container">
+    <!-- Circular Logo -->
+    <img src="../images4/villasis.jpg" alt="Villasis Logo" class="dashboard-logo" />
+    
+    <h2>Resident Dashboard</h2>
+    <p id="welcome-text">Welcome, Resident!</p>
+
+    <div class="button-row">
+      <a href="residents-announcement.html">View Announcements</a>
+      <a href="request-document.html">Request Document</a>
+      <a href="profile.html">View Profile</a>
+      <button id="logout-button">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("logout-button").addEventListener("click", function () {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "../index.html";
+    });
+  </script>
+
+</body>
+</html>

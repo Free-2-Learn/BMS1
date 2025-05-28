@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Announcements</title>
+  <script type="module" src="../js/residents-announcements.js"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/display-ann-resident.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white; /* Text white */
+      background: black;
+      text-align: center;
+    }
+
+    /* Background Video */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    /* Glowing Back Button */
+    #back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white; /* white text */
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      z-index: 10;
+      box-shadow:
+        0 0 8px #ff4d7a,
+        0 0 15px #ff4d7a,
+        0 0 25px #ff4d7a;
+    }
+
+    #back-button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+      box-shadow:
+        0 0 15px #ff4d7a,
+        0 0 30px #ff4d7a,
+        0 0 50px #ff4d7a;
+      color: #ff4d7a;
+    }
+
+    /* Announcement Title Glow */
+    h2 {
+      margin-top: 80px;
+      font-size: 2.8rem;
+      color: white; /* white text */
+      text-shadow:
+        0 0 10px #ff4d7a,
+        0 0 20px #ff4d7a,
+        0 0 30px #ff4d7a;
+    }
+
+    #announcement-list {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+      color: white; /* white text inside container */
+    }
+
+    /* Announcement Card with Purple-Red Glow */
+    .announcement-card {
+      background: rgba(128, 0, 64, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      text-align: left;
+      color: white; /* white text */
+      box-shadow:
+        0 0 12px #ff4d7a,
+        0 0 24px #ff4d7a,
+        0 0 36px #ff4d7a;
+      border: 1px solid #ff4d7a;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+
+    /* Glow on the first child (title) inside announcement-card */
+    .announcement-card > *:first-child {
+      color: white; /* white text */
+      font-weight: bold;
+      font-size: 1.4rem;
+      text-shadow:
+        0 0 5px #ff4d7a,
+        0 0 10px #ff4d7a,
+        0 0 15px #ff4d7a,
+        0 0 20px #ff4d7a;
+      margin-bottom: 10px;
+    }
+
+    /* Author and date with white text, subtle glow */
+    .announcement-author {
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-shadow:
+        0 0 5px #ff4d7a;
+    }
+
+    .announcement-date {
+      color: white;
+      font-style: italic;
+      font-size: 0.85rem;
+      text-shadow:
+        0 0 5px #ff4d7a;
+    }
+
+    #load-more {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      background: rgba(128, 0, 64, 0.15);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      box-shadow:
+        0 0 12px #ff4d7a,
+        0 0 24px #ff4d7a,
+        0 0 36px #ff4d7a;
+    }
+
+    #load-more:hover {
+      background: rgba(128, 0, 64, 0.3);
+      box-shadow:
+        0 0 20px #ff4d7a,
+        0 0 40px #ff4d7a,
+        0 0 60px #ff4d7a;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop id="bg-video" playsinline>
+    <source src="../images3/announcement.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="overlay"></div>
+
+  <!-- Back to Dashboard -->
+  <a id="back-button" href="dashboard-resident.html">Back</a>
+
+  <!-- Title -->
+  <h2>Announcements</h2>
+
+  <!-- Announcements Container -->
+  <div id="announcement-list">
+    <!-- JS will populate announcements here -->
+  </div>
+
+  <!-- Load More Button -->
+  <button id="load-more" style="display: none;">Load More</button>
+
+  <!-- Image Modal for Viewing Images -->
+  <div id="image-modal" class="hidden">
+    <button id="close-btn" onclick="closeImageModal()">X</button>
+    <button id="prev-btn" onclick="prevImage()">&#10094;</button>
+    <img id="modal-image" />
+    <button id="next-btn" onclick="nextImage()">&#10095;</button>
+  </div>
+
+  <script type="module">
+    import { auth } from "../firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    import { db } from "../firebase-config.js";
+
+    async function isResident(user) {
+      if (!user) return false;
+      const residentRef = doc(db, "residents", user.email);
+      const residentSnap = await getDoc(residentRef);
+      return residentSnap.exists();
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        console.warn("No user logged in. Redirecting.");
+        window.location.href = "../index.html";
+        return;
+      }
+
+      const isUserResident = await isResident(user);
+      if (!isUserResident) {
+        console.warn("Unauthorized. Redirecting.");
+        await signOut(auth);
+        window.location.href = "../index.html";
+        return;
+      }
+
+      console.log("Resident logged in.");
+    });
+  </script>
+
+  <script type="module">
+    import { openImageModal, closeImageModal, prevImage, nextImage } from "../js/residents-announcements.js";
+
+    window.openImageModal = openImageModal;
+    window.closeImageModal = closeImageModal;
+    window.prevImage = prevImage;
+    window.nextImage = nextImage;
+  </script>
+
+</body>
+</html>

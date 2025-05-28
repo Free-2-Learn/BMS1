@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Captain Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script type="module" src="../js/dashboard.js"></script>
+
+  <style>
+    /* Background video styling */
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Dark overlay */
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    /* Center layout */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+      text-align: center;
+    }
+
+    /* Dashboard container */
+    .dashboard-container {
+      position: relative;
+      z-index: 1;
+      color: white;
+      background-color: transparent;  /* Fully transparent */
+      padding: 60px 80px;
+      width: 800px;
+      max-width: 90%;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 20px;
+      /* Glow effect on container text */
+      text-shadow:
+        0 0 10px #00cfff,
+        0 0 20px #00cfff,
+        0 0 30px #00cfff;
+    }
+
+    /* Circular logo styling */
+    .logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 30px;
+      border: 3px solid white;
+      display: block;
+      filter:
+        drop-shadow(0 0 6px #00cfff)
+        drop-shadow(0 0 10px #00cfff);
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: white;
+      text-shadow:
+        0 0 10px #00cfff,
+        0 0 20px #00cfff,
+        0 0 30px #00cfff;
+    }
+
+    p {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      color: white;
+      text-shadow:
+        0 0 6px #00cfff,
+        0 0 12px #00cfff;
+    }
+
+    /* Horizontal button row container */
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: nowrap;
+    }
+
+    /* Style for each button/link as a square box */
+    .button-row a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 160px;
+      height: 160px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow:
+        0 0 8px #00cfff,
+        0 0 15px #00cfff;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .button-row a:hover {
+      background-color: #0056b3;
+      box-shadow:
+        0 0 20px #00cfff,
+        0 0 40px #00cfff,
+        0 0 60px #00cfff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <video autoplay muted loop id="background-video">
+    <source src="../images7/captain.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="video-overlay"></div>
+
+  <!-- Dashboard content -->
+  <div class="dashboard-container">
+    <!-- Logo image -->
+    <img src="../images8/logo101.jpg" alt="Captain Logo" class="logo" />
+
+    <h2>Captain Dashboard</h2>
+    <p>Welcome, Captain!</p>
+
+    <div class="button-row">
+      <a href="residents.html">Manage Residents</a>
+      <a href="document-requests.html">Document Requests</a>
+      <a href="captain-announcements.html">Announcements</a>
+      <a href="../index.html" id="logout-button">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

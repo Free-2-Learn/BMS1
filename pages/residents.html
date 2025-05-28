@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Residents</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script type="module" src="../js/residents.js"></script>
+
+  <style>
+    /* Background video styling */
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Dark overlay with lighter opacity and no pointer events */
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.1); /* lighter overlay */
+      z-index: 0;
+      pointer-events: none; /* allow clicks through overlay */
+    }
+
+    /* Main content styling */
+    body {
+      position: relative;
+      z-index: 1;
+      color: #fff; /* bright text */
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: transparent;
+    }
+
+    /* Inputs, buttons styling for readability */
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="tel"],
+    select,
+    button {
+      color: #000; /* black text inside inputs */
+      font-size: 1rem;
+      padding: 8px;
+      margin: 5px 0 15px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+      background-color: #fff; /* white backgrounds */
+    }
+
+    button {
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      max-width: 200px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: rgba(0, 0, 0, 0.8);
+      cursor: pointer;
+    }
+
+    /* Resident counters styling */
+    .resident-counters {
+     background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark background */
+     padding: 10px 15px;
+     border-radius: 8px;
+     display: inline-block;
+     color: white;
+     font-weight: bold;
+     margin-bottom: 20px;
+    }
+
+    /* Modal styling adjustments */
+    .modal-content {
+      background-color: rgba(0,0,0,0.9);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 40px auto;
+      position: relative;
+    }
+
+    .modal-header h2 {
+      margin: 0 0 15px 0;
+    }
+
+    .close {
+      color: white;
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Link styling */
+    a {
+      color: #00cfff;
+      text-decoration: underline;
+      margin-top: 20px;
+      display: inline-block;
+    }
+    a:hover {
+      color: #008bbf;
+    }
+
+    /* Container for search and button stacked */
+    .search-container {
+      max-width: 400px;
+      margin-bottom: 10px;
+    }
+
+    /* Add Resident button container */
+    .add-resident-container {
+      max-width: 200px;
+    }
+
+    .modal-body label,
+    .modal-body input,
+    .modal-body select {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+.modal-body label {
+  display: block;
+  text-align: left;          
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.modal-body input,
+.modal-body select {
+  display: block;
+  margin: 0 auto 15px auto;  
+  width: 100%;
+  max-width: 400px;          
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <video autoplay muted loop id="background-video" playsinline>
+    <source src="../images9/resident.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="video-overlay"></div>
+
+  <!-- Content starts here -->
+  <div class="resident-counters">
+    <p>Total Residents: <span id="total-residents">0</span></p>
+    <p>Active Residents: <span id="active-residents">0</span></p>
+    <p>Inactive Residents: <span id="inactive-residents">0</span></p>
+  </div>
+
+  <h2 style="text-align: center; font-size: 3.5rem; margin-top: 20px;">Manage Residents</h2>
+
+  <!-- Search bar -->
+  <div class="search-container">
+    <input
+      type="text"
+      id="search-bar"
+      placeholder="Search residents..."
+      onkeyup="searchResidents()"
+    />
+  </div>
+
+  <!-- Add Resident button below search -->
+  <div class="add-resident-container">
+    <button id="openAddResidentModal">Add Resident</button>
+  </div>
+
+  <!-- Residents Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th onclick="toggleSorting()" style="cursor: pointer;">
+          Full Name <span id="sortIcon">▲</span>
+        </th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Age</th>
+        <th>Birthdate</th>
+        <th>Gender</th>
+        <th>Civil Status</th>
+        <th>Contact Number</th>
+        <th>Address</th>
+        <th>Occupation</th>
+        <th>Educational Attainment</th>
+        <th>Special Categories</th>
+        <th>Voter Info</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="resident-body">
+      <!-- Residents will be loaded here -->
+    </tbody>
+  </table>
+
+  <!-- Edit Resident Modal -->
+  <div id="editResidentModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Resident</h2>
+      </div>
+      <div class="modal-body">
+        <form id="edit-resident-form">
+          <input type="hidden" id="edit-resident-id" />
+          <label>First Name:</label>
+          <input type="text" id="edit-first-name" required />
+          <label>Middle Name:</label>
+          <input type="text" id="edit-middle-name" />
+          <label>Last Name:</label>
+          <input type="text" id="edit-last-name" required />
+          <label>Age:</label>
+          <input type="number" id="edit-age" required min="0" />
+          <label>Birthdate:</label>
+          <input type="date" id="edit-birthdate" required />
+          <label>Gender:</label>
+          <select id="edit-gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <label>Civil Status:</label>
+          <select id="edit-civil-status" required>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Widowed">Widowed</option>
+            <option value="Separated">Separated</option>
+          </select>
+          <label>Contact Number:</label>
+          <input
+            type="tel"
+            id="edit-contact-number"
+            class="phone-input"
+            required
+            placeholder="+63 XXXXXXXXXX"
+            maxlength="14"
+          />
+          <label>Address:</label>
+          <input type="text" id="edit-address" required />
+          <label>Occupation:</label>
+          <input type="text" id="edit-occupation" />
+          <label>Education:</label>
+          <select id="edit-education" required>
+            <option value="Elementary">Elementary</option>
+            <option value="High School">High School</option>
+            <option value="College">College</option>
+            <option value="Vocational">Vocational</option>
+            <option value="Postgraduate">Postgraduate</option>
+          </select>
+          <label>Special Categories:</label>
+          <select id="edit-special-categories">
+            <option value="None">None</option>
+            <option value="Senior Citizen">Senior Citizen</option>
+            <option value="PWD">PWD</option>
+            <option value="4Ps Beneficiary">4Ps Beneficiary</option>
+          </select>
+          <label>Voter Info:</label>
+          <input type="text" id="edit-voter-info" />
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Resident Modal -->
+  <div id="addResidentModal" class="modal" style="display:none;">
+    <div class="modal-content add-resident-modal">
+      <div class="modal-header">
+        <span class="close" onclick="closeAddResidentModal()">&times;</span>
+        <h2>Add Resident</h2>
+      </div>
+      <div class="modal-body">
+        <form id="add-resident-form">
+          <label>First Name:</label>
+          <input type="text" id="first-name" required />
+          <label>Last Name:</label>
+          <input type="text" id="last-name" required />
+          <label>Middle Name:</label>
+          <input type="text" id="middle-name" />
+          <label>Age:</label>
+          <input type="number" id="age" required min="0" />
+          <label>Birthdate:</label>
+          <input type="date" id="birthdate" required />
+          <label>Gender:</label>
+          <select id="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <label>Civil Status:</label>
+          <select id="civil-status" required>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Widowed">Widowed</option>
+            <option value="Separated">Separated</option>
+          </select>
+          <label>Contact Number:</label>
+          <input
+            type="tel"
+            id="contact-number"
+            class="phone-input"
+            required
+            placeholder="+63 XXXXXXXXXX"
+            maxlength="14"
+          />
+          <label>Address:</label>
+          <input type="text" id="address" required />
+          <label>Occupation:</label>
+          <input type="text" id="occupation" />
+          <label>Education:</label>
+          <select id="education" required>
+            <option value="Elementary">Elementary</option>
+            <option value="High School">High School</option>
+            <option value="College">College</option>
+            <option value="Vocational">Vocational</option>
+            <option value="Postgraduate">Postgraduate</option>
+          </select>
+          <label>Special Categories:</label>
+          <select id="special-categories">
+            <option value="None">None</option>
+            <option value="Senior Citizen">Senior Citizen</option>
+            <option value="PWD">PWD</option>
+            <option value="4Ps Beneficiary">4Ps Beneficiary</option>
+          </select>
+          <label>Voter Info:</label>
+          <input type="text" id="voter-info" />
+          <button type="submit" id="submitAddResident">
+            <span id="addResidentText">Add Resident</span>
+            <span
+              id="addResidentLoader"
+              class="loader"
+              style="display: none;"
+            ></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <a href="dashboard-captain.html">Back</a>
+</body>
+</html>

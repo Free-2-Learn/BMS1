@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Document</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/request-doc.css" />
+  <style>
+    /* Video background */
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -2;
+      object-fit: cover;
+    }
+
+    /* Overlay to darken background */
+    #video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      color: #fff;
+    }
+
+    .center-title {
+      text-align: center;
+      font-size: 3rem;
+      margin-top: 40px;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    h3, p {
+      text-shadow: 1px 1px 2px black;
+    }
+
+    dialog {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      color: black;
+    }
+
+    .request-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .requests-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 10px;
+      margin: 30px auto;   /* centers horizontally */
+      color: black;
+      max-width: 1000px;   /* limits width so it's not full width */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    #resident-name {
+      font-size: 1.5rem; /* Adjust size as needed */
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 40px;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    a.back-btn {
+     position: fixed;
+     top: 20px;
+     left: 20px;
+     color: white;
+     padding: 12px 24px;
+     font-size: 1.2rem;
+     font-weight: bold;
+     text-decoration: underline;
+     z-index: 10;
+     background: none;   /* removed background */
+      box-shadow: none;   /* removed shadow */
+      cursor: pointer;
+    }
+
+     a.back-btn:hover {
+     color: #ccc;  /* lighter on hover */
+     text-decoration: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- 🔁 Video Background -->
+  <video autoplay muted loop id="background-video">
+    <source src="../images5/request.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- 🔲 Dark Overlay -->
+  <div id="video-overlay"></div>
+
+  <!-- Back Button -->
+  <a href="dashboard-resident.html" class="back-btn">Back</a>
+
+  <!-- Page Content -->
+  <h2 class="center-title">Request Document</h2>
+
+  <p id="resident-name" style="text-align: center;">Loading...</p>
+
+  <button id="open-modal-btn" class="request-btn">
+    <span class="icon">📄</span> Request Document
+  </button>
+
+  <dialog id="request-modal">
+    <form id="request-form">
+      <h2>Request Document</h2>
+      <label for="document-type">Select Document Type:</label>
+      <select id="document-type" required>
+        <option value="">--Please choose an option--</option>
+        <option value="Barangay Clearance">Barangay Clearance</option>
+        <option value="Certificate of Residency">Certificate of Residency</option>
+        <option value="Indigency Certificate">Indigency Certificate</option>
+        <option value="Barangay ID">Barangay ID</option>
+        <option value="Others">Others</option>
+      </select>
+
+      <div id="custom-document-type-container" style="display: none;">
+        <label for="custom-document-type">Specify Document Type:</label>
+        <input type="text" id="custom-document-type" placeholder="Enter document type" />
+      </div>
+
+      <label for="request-note">Reason/Purpose:</label>
+      <textarea id="request-note" placeholder="Enter the reason for requesting this document..." required></textarea>
+
+      <div>
+        <button type="submit">Submit Request</button>
+        <button type="button" id="close-modal-btn">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <h3 class="section-heading">Pending Requests</h3>
+  <div class="requests-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Resident Name</th>
+          <th>Document Type</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="pending-requests-body"></tbody>
+    </table>
+  </div>
+
+  <h3 class="section-heading">Approved & Rejected Requests</h3>
+  <div class="requests-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Resident Name</th>
+          <th>Document Type</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Requested at</th>
+          <th>Approved/Rejected at</th>
+          <th>Captain's Comment</th>
+        </tr>
+      </thead>
+      <tbody id="completed-requests-body"></tbody>
+    </table>
+  </div>
+
+  <dialog id="edit-request-modal">
+    <form id="edit-request-form">
+      <h2>Edit Document Request</h2>
+      <input type="hidden" id="edit-request-id" />
+
+      <label for="edit-document-type">Select Document Type:</label>
+      <select id="edit-document-type" required>
+        <option value="Barangay Clearance">Barangay Clearance</option>
+        <option value="Certificate of Residency">Certificate of Residency</option>
+        <option value="Indigency Certificate">Indigency Certificate</option>
+        <option value="Barangay ID">Barangay ID</option>
+        <option value="Others">Others</option>
+      </select>
+
+      <div id="edit-custom-document-type-container" style="display: none;">
+        <label for="edit-custom-document-type">Specify Document Type:</label>
+        <input type="text" id="edit-custom-document-type" />
+      </div>
+
+      <label for="edit-request-note">Reason/Purpose:</label>
+      <textarea id="edit-request-note" required></textarea>
+
+      <div>
+        <button type="submit">Save Changes</button>
+        <button type="button" id="close-edit-modal-btn">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="../js/request-document.js"></script>
+</body>
+</html>
