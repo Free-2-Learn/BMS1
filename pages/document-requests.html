@@ -8,68 +8,184 @@
   <link rel="stylesheet" href="../css/style.css" />
   <script type="module" src="../js/document-requests.js"></script>
 
+  <style>
+    /* Video Background Style */
+    #background-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;       /* Behind content */
+      object-fit: cover;  /* Cover full viewport */
+      background-size: cover;
+    }
+    
+    body {
+      position: relative;
+      z-index: 0; /* Content above video */
+      color: #000; /* Black text */
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Transparent container with blur for readability */
+    .requests-container {
+      background-color: rgba(255, 255, 255, 0.85); /* stronger white background */
+      padding: 25px 30px;
+      border-radius: 12px;
+      margin: 25px auto;
+      max-width: 1200px;
+      color: #000; /* black font */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Remove text shadows since font is black */
+    .requests-container h2,
+    .requests-container table,
+    .requests-container p,
+    .requests-container th,
+    .requests-container td {
+      text-shadow: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: none;
+      background-color: rgba(255, 255, 255, 0.9); /* white with slight transparency */
+      color: #000; /* black font */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-radius: 6px;
+    }
+
+    th {
+      background-color: rgba(230, 230, 230, 0.95);
+      font-weight: 600;
+    }
+
+    /* Back button on top, bright blue with subtle shadow */
+    .back-btn {
+      display: inline-block;
+      margin: 20px auto 10px auto;
+      padding: 12px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #007bff; /* bootstrap blue */
+      color: white; /* white text */
+      text-decoration: none;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      max-width: 1200px;
+      width: fit-content;
+      box-shadow: 0 5px 12px rgba(0, 123, 255, 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .back-btn:hover {
+      background-color: #0056b3; /* darker blue on hover */
+      box-shadow: 0 6px 15px rgba(0, 86, 179, 0.7);
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: rgba(255, 255, 255, 0.97);
+      padding: 25px;
+      border-radius: 10px;
+      width: 400px;
+      color: black;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 
 <body>
-    <div class="requests-container">
-      <h2>Pending Requests</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Resident Name</th>
-            <th>Document Type</th>
-            <th>Reason</th>
-            <th>Status</th>
-            <th>
-                Date Requested
-                <button type="button" id="sortToggleBtn" onclick="toggleSortPending()" title="Sort by Date">🔽</button>
-            </th>                                       
-            <th>Approve/Reject</th>
-          </tr>
-        </thead>
-        <tbody id="pending-requests"></tbody>
-      </table>
-    </div>
-  
-    <div class="requests-container">
-      <h2>Processed Requests</h2>
-      <table>
-        <thead>
-            <tr>
-              <th>Resident Name</th>
-              <th>Document Type</th>
-              <th>Reason</th>
-              <th>Status</th>
-              <th>
-                Date Requested
-                <button type="button" id="sortToggleBtn1" onclick="toggleSortProcessed()" title="Sort by Date">🔽</button>
-              </th>
-              <th>Approved/Rejected Date</th>
-              <th>Captain's Comment</th>
-            </tr>
-        </thead>          
-        <tbody id="processed-requests"></tbody>
-      </table>
-    </div>
-  
-    <a href="dashboard-captain.html" class="request-btn" style="margin-left: 20px;">Back</a>
-  
 
-    <!-- Reason Modal -->
-    <div id="reason-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-          <h3 id="modal-title">Reason for Action</h3>
-          <!-- Resident name displayed here -->
-          <p id="resident-name" style="font-weight: bold; margin-top: 10px;"></p>
-          <p>Provide a reason for <span id="action-type">this action</span> (optional):</p>
-          <textarea id="action-reason" placeholder="Type your reason here..." style="width:100%; height:100px; margin-top:10px;"></textarea>
-          <div style="margin-top: 20px; text-align: right;">
-            <button class="request-btn" onclick="confirmAction()">Confirm</button>
-            <button class="request-btn" style="background:#aaa;" onclick="closeReasonModal()">Cancel</button>
-          </div>
-        </div>
+  <video autoplay muted loop id="background-video">
+    <source src="../images11/request101.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Back button moved to top -->
+  <a href="dashboard-captain.html" class="back-btn">Back</a>
+
+  <div class="requests-container">
+    <h2>Pending Requests</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Resident Name</th>
+          <th>Document Type</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>
+            Date Requested
+            <button type="button" id="sortToggleBtn" onclick="toggleSortPending()" title="Sort by Date">🔽</button>
+          </th>                                       
+          <th>Approve/Reject</th>
+        </tr>
+      </thead>
+      <tbody id="pending-requests"></tbody>
+    </table>
+  </div>
+
+  <div class="requests-container">
+    <h2>Processed Requests</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Resident Name</th>
+          <th>Document Type</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>
+            Date Requested
+            <button type="button" id="sortToggleBtn1" onclick="toggleSortProcessed()" title="Sort by Date">🔽</button>
+          </th>
+          <th>Approved/Rejected Date</th>
+          <th>Captain's Comment</th>
+        </tr>
+      </thead>          
+      <tbody id="processed-requests"></tbody>
+    </table>
+  </div>
+
+  <!-- Reason Modal -->
+  <div id="reason-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3 id="modal-title">Reason for Action</h3>
+      <p id="resident-name" style="font-weight: bold; margin-top: 10px;"></p>
+      <p>Provide a reason for <span id="action-type">this action</span> (optional):</p>
+      <textarea id="action-reason" placeholder="Type your reason here..." style="width:100%; height:100px; margin-top:10px;"></textarea>
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="request-btn" onclick="confirmAction()">Confirm</button>
+        <button class="request-btn" style="background:#aaa;" onclick="closeReasonModal()">Cancel</button>
       </div>
-      
-  </body>
+    </div>
+  </div>
   
+</body>
 </html>
