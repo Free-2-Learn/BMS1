@@ -178,6 +178,27 @@
   border-radius: 4px;
 }
 
+    /* Back button fixed top-left styling */
+    .back-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      color: #00cfff;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: underline;
+      background-color: rgba(0, 0, 0, 0.5); /* subtle background for readability */
+      padding: 6px 12px;
+      border-radius: 5px;
+      z-index: 10; /* stay on top */
+      cursor: pointer;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      color: #008bbf;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
 <body>
