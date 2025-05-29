@@ -1,121 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Profile Dashboard</title>
-    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/style.css" />
     <script type="module" src="../js/profile.js"></script>
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/profile.css" />
 </head>
 <body>
 
-<a href="dashboard-resident.html">Back</a>
+  <!-- Background Video -->
+  <video autoplay muted loop id="background-video">
+    <source src="images6/profile.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
+  <a href="dashboard-resident.html">Back</a>
 
-    <!-- Profile Dashboard -->
-    <div id="profile-dashboard">
-        <div id="profile-header">
-            <h1>Welcome, <span id="user-name"></span></h1>
-            <button id="edit-profile-btn">Edit Profile</button>
-        </div>
+  <!-- Profile Dashboard -->
+  <div id="profile-dashboard">
+    <div id="profile-header">
+      <h1>Welcome, <span id="user-name"></span></h1>
+      <button id="edit-profile-btn">Edit Profile</button>
+    </div>
 
-        <!-- Resident Information Section -->
-        <div id="resident-info">
-            <p><strong>First Name:</strong> <span id="resident-first-name"></span></p>
-            <p><strong>Middle Name:</strong> <span id="resident-middle-name"></span></p>
-            <p><strong>Last Name:</strong> <span id="resident-last-name"></span></p>
-            <p><strong>Email:</strong> <span id="resident-email"></span></p>
-            <p><strong>Contact Number:</strong> <span id="resident-contact-number"></span></p>
-            <p><strong>Gender:</strong> <span id="resident-gender"></span></p>
-            <p><strong>Address:</strong> <span id="resident-address"></span></p>
-            <p><strong>Occupation:</strong> <span id="resident-occupation"></span></p>
-            <p><strong>Education:</strong> <span id="resident-education"></span></p>
-            <p><strong>Special Categories:</strong> <span id="resident-special-categories"></span></p>
+    <!-- Resident Information Section -->
+    <div id="resident-info">
+      <p><strong>First Name:</strong> <span id="resident-first-name"></span></p>
+      <p><strong>Middle Name:</strong> <span id="resident-middle-name"></span></p>
+      <p><strong>Last Name:</strong> <span id="resident-last-name"></span></p>
+      <p><strong>Email:</strong> <span id="resident-email"></span></p>
+      <p><strong>Contact Number:</strong> <span id="resident-contact-number"></span></p>
+      <p><strong>Gender:</strong> <span id="resident-gender"></span></p>
+      <p><strong>Address:</strong> <span id="resident-address"></span></p>
+      <p><strong>Occupation:</strong> <span id="resident-occupation"></span></p>
+      <p><strong>Education:</strong> <span id="resident-education"></span></p>
+      <p><strong>Special Categories:</strong> <span id="resident-special-categories"></span></p>
+    </div>
 
-        </div>
+    <!-- Password Change Prompt Modal (First Time) -->
+    <div id="change-password-modal" class="modal">
+      <div class="modal-content">
+        <h2>Change Your Password</h2>
+        <form id="change-password-form" class="form-group">
+          <div class="input-group">
+            <label for="current-password">Current Password</label>
+            <input type="password" id="current-password" required />
+          </div>
 
-<!-- Password Change Prompt Modal (First Time) -->
-<div id="change-password-modal" class="modal">
-  <div class="modal-content">
-    <h2>Change Your Password</h2>
-    <form id="change-password-form" class="form-group">
-      <div class="input-group">
-        <label for="current-password">Current Password</label>
-        <input type="password" id="current-password" required>
+          <div class="input-group">
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" required />
+          </div>
+
+          <div class="input-group">
+            <label for="confirm-password">Confirm New Password</label>
+            <input type="password" id="confirm-password" required />
+          </div>
+
+          <button type="submit" class="btn">Change Password</button>
+        </form>
+        <button id="close-change-password-modal" class="btn cancel-btn">Close</button>
       </div>
+    </div>
 
-      <div class="input-group">
-        <label for="new-password">New Password</label>
-        <input type="password" id="new-password" required>
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal">
+      <div class="modal-content">
+        <h2>Edit Profile</h2>
+        <form id="edit-profile-form">
+          <div class="input-group">
+            <label for="edit-first-name">First Name</label>
+            <input type="text" id="edit-first-name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="edit-middle-name">Middle Name</label>
+            <input type="text" id="edit-middle-name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="edit-last-name">Last Name</label>
+            <input type="text" id="edit-last-name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="edit-contact-number">Contact Number</label>
+            <input type="text" id="edit-contact-number" required />
+          </div>
+
+          <div class="input-group">
+            <label for="edit-gender">Gender</label>
+            <select id="edit-gender" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="edit-address">Address</label>
+            <input type="text" id="edit-address" required />
+          </div>
+
+          <div class="input-group">
+            <label for="edit-occupation">Occupation</label>
+            <input type="text" id="edit-occupation" required />
+          </div>
+
+          <div class="input-group">
+            <label for="edit-education">Education</label>
+            <select id="edit-education" required>
+              <option value="">Select</option>
+              <option value="Elementary">Elementary</option>
+              <option value="High School">High School</option>
+              <option value="College">College</option>
+              <option value="Vocational">Vocational</option>
+              <option value="Postgraduate">Postgraduate</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="edit-special-categories">Special Categories</label>
+            <select id="edit-special-categories">
+              <option value="None">None</option>
+              <option value="Senior Citizen">Senior Citizen</option>
+              <option value="PWD">PWD</option>
+              <option value="4Ps Beneficiary">4Ps Beneficiary</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Save Changes</button>
+        </form>
+        <button id="close-edit-modal" class="btn cancel-btn">Close</button>
       </div>
-
-      <div class="input-group">
-        <label for="confirm-password">Confirm New Password</label>
-        <input type="password" id="confirm-password" required>
-      </div>
-
-      <button type="submit" class="btn">Change Password</button>
-    </form>
-    <button id="close-change-password-modal" class="btn cancel-btn">Close</button>
+    </div>
   </div>
-</div>
-
-<!-- Edit Profile Modal -->
-<div id="edit-profile-modal" class="modal">
-  <div class="modal-content">
-    <h2>Edit Profile</h2>
-    <form id="edit-profile-form">
-      <label for="edit-first-name">First Name</label>
-      <input type="text" id="edit-first-name" required>
-
-      <label for="edit-middle-name">Middle Name</label>
-      <input type="text" id="edit-middle-name" required>
-
-      <label for="edit-last-name">Last Name</label>
-      <input type="text" id="edit-last-name" required>
-
-      <label for="edit-contact-number">Contact Number</label>
-      <input type="text" id="edit-contact-number" required>
-
-      <label for="edit-gender">Gender</label>
-      <select id="edit-gender" required>
-        <option value="">Select</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-
-      <label for="edit-address">Address</label>
-      <input type="text" id="edit-address" required>
-
-      <label for="edit-occupation">Occupation</label>
-      <input type="text" id="edit-occupation" required>
-
-        <label>Education:</label>
-        <select id="edit-education" required>
-          <option value="Elementary">Elementary</option>
-          <option value="High School">High School</option>
-          <option value="College">College</option>
-          <option value="Vocational">Vocational</option>
-          <option value="Postgraduate">Postgraduate</option>
-        </select>
-
-          <label>Special Categories:</label>
-          <select id="edit-special-categories">
-            <option value="None">None</option>
-            <option value="Senior Citizen">Senior Citizen</option>
-            <option value="PWD">PWD</option>
-            <option value="4Ps Beneficiary">4Ps Beneficiary</option>
-          </select>
-
-      <button type="submit">Save Changes</button>
-    </form>
-    <button id="close-edit-modal">Close</button>
-  </div>
-</div>
-
-
 
 </body>
 </html>
