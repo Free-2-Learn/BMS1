@@ -1,94 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Captain Announcements</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/post-ann.css">
-    <link rel="stylesheet" href="../css/edit-post-ann.css">
-    <link rel="stylesheet" href="../css/dispay-ann.css">
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/post-ann.css" />
+    <link rel="stylesheet" href="../css/edit-post-ann.css" />
+    <link rel="stylesheet" href="../css/dispay-ann.css" />
 
+    <!-- Added CSS to improve text visibility on dark background and increase font size -->
+    <style>
+      /* Container holding the announcement form */
+      #announcement-form-container {
+        background: rgba(0, 0, 0, 0.7); /* dark translucent background */
+        color: #fff; /* white text */
+        padding: 25px;
+        border-radius: 10px;
+        max-width: 700px;
+        margin: 2rem auto;
+        position: relative;
+        z-index: 10;
+        font-size: 18px; /* increased base font size */
+      }
+
+      /* Textarea styling */
+      #announcement-input,
+      #edit-text {
+        color: #fff; /* white text inside textarea */
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 12px;
+        width: 100%;
+        font-size: 18px; /* larger font in textarea */
+        resize: vertical;
+      }
+
+      /* Placeholder text color inside textarea */
+      #announcement-input::placeholder,
+      #edit-text::placeholder {
+        color: #bbb;
+        font-size: 18px; /* match font size */
+      }
+
+      /* Buttons */
+      button {
+        background-color: #444;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px; /* larger button font */
+      }
+
+      button:hover {
+        background-color: #666;
+      }
+
+      /* Announcement list items */
+      #announcement-list li {
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 5px;
+        font-size: 18px; /* bigger announcement text */
+      }
+
+      /* Headings */
+      h2, h3 {
+        color: #fff;
+        font-size: 28px; /* bigger headings */
+      }
+
+      /* Other text inside the form */
+      #file-name,
+      #image-preview,
+      #edit-image-preview {
+        color: #fff;
+        font-size: 18px;
+      }
+
+      /* Make sure the Back button is visible and larger */
+      #back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: rgba(0,0,0,0.7);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        z-index: 10;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      #back-button:hover {
+        background: rgba(255,255,255,0.3);
+      }
+    </style>
 </head>
 <body>
 
-    
-<!-- Back to Dashboard -->
-<a id="back-button" href="dashboard-captain.html">Back</a>
+  <!-- Background Video -->
+  <video autoplay muted loop id="background-video">
+    <source src="images10/captainannounce.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-    <!-- Input Field (Only for Captain) -->
-<div id="announcement-form-container">
-    <h3>Post an Announcement</h3>
-    <div id="announcement-form">
-        <textarea id="announcement-input" placeholder="Write an announcement..." required></textarea>
+  <!-- Back to Dashboard -->
+  <a id="back-button" href="dashboard-captain.html">Back</a>
 
-        <!-- Custom File Upload Button -->
-        <button type="button" id="custom-file-button">Choose Images</button>
-        <input type="file" id="announcement-image" accept="image/*" multiple style="display: none;">
-        <span id="file-name" style="display: none;"></span>
+  <!-- Input Field (Only for Captain) -->
+  <div id="announcement-form-container">
+      <h3>Post an Announcement</h3>
+      <div id="announcement-form">
+          <textarea id="announcement-input" placeholder="Write an announcement..." required></textarea>
 
-        <!-- Preview selected images -->
-        <div id="image-preview"></div>
+          <!-- Custom File Upload Button -->
+          <button type="button" id="custom-file-button">Choose Images</button>
+          <input type="file" id="announcement-image" accept="image/*" multiple style="display: none;" />
+          <span id="file-name" style="display: none;"></span>
 
-        <button id="post-announcement">Post</button>
-    </div>
-</div>
+          <!-- Preview selected images -->
+          <div id="image-preview"></div>
 
+          <button id="post-announcement">Post</button>
+      </div>
+  </div>
 
-<h2>Announcements</h2>
+  <h2>Announcements</h2>
 
-<!-- Display Announcements -->
-<ul id="announcement-list"></ul>
+  <!-- Display Announcements -->
+  <ul id="announcement-list"></ul>
 
-<!-- Load More Button -->
-<button id="load-more" style="display: none;">Load More</button>
+  <!-- Load More Button -->
+  <button id="load-more" style="display: none;">Load More</button>
 
-<!--  Edit Modal -->
-<div id="edit-modal" class="edit-modal">
-    <div class="edit-modal-content">
-        <span class="close-modal">&times;</span>
-        
-        <!-- Profile and Header -->
-        <div class="edit-header">
-            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='gray'><circle cx='12' cy='8' r='4'/><path d='M2 20c0-4 4-7 10-7s10 3 10 7'/></svg>" class="profile-pic">
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="edit-modal">
+      <div class="edit-modal-content">
+          <span class="close-modal">&times;</span>
 
+          <!-- Profile and Header -->
+          <div class="edit-header">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='gray'><circle cx='12' cy='8' r='4'/><path d='M2 20c0-4 4-7 10-7s10 3 10 7'/></svg>" class="profile-pic" />
 
-            <h3>Edit Post</h3>
-        </div>
-        
-        <!-- Post Text -->
-        <textarea id="edit-text" placeholder="What's on your mind?" rows="4"></textarea>
-        
-        <!-- Image Preview Area -->
-        <div id="edit-image-preview" class="image-preview"></div>
-        
-        <!-- Upload Button -->
-        <label for="edit-image-input" class="upload-btn">+ Add Photos</label>
-        <input type="file" id="edit-image-input" accept="image/*" multiple style="display: none;">
+              <h3>Edit Post</h3>
+          </div>
 
-        <!-- Action Buttons -->
-        <div class="edit-footer">
-            <button id="save-edit" class="post-btn">Save Changes</button>
-        </div>
-    </div>
-</div>
+          <!-- Post Text -->
+          <textarea id="edit-text" placeholder="What's on your mind?" rows="4"></textarea>
 
-<div id="image-modal">
-    <button id="close-btn" onclick="closeImageModal()">X</button>
-    <button id="prev-btn" onclick="prevImage()">&#10094;</button>
-    <img id="modal-image">
-    <button id="next-btn" onclick="nextImage()">&#10095;</button>
-</div>
+          <!-- Image Preview Area -->
+          <div id="edit-image-preview" class="image-preview"></div>
 
-<script type="module" src="../js/captain-announcements.js"></script>
+          <!-- Upload Button -->
+          <label for="edit-image-input" class="upload-btn">+ Add Photos</label>
+          <input type="file" id="edit-image-input" accept="image/*" multiple style="display: none;" />
 
-<script type="module">
-    import { openImageModal, closeImageModal, prevImage, nextImage } from "../js/captain-announcements.js";
-    window.openImageModal = openImageModal;
-    window.closeImageModal = closeImageModal;
-    window.prevImage = prevImage;
-    window.nextImage = nextImage;
-</script>
+          <!-- Action Buttons -->
+          <div class="edit-footer">
+              <button id="save-edit" class="post-btn">Save Changes</button>
+          </div>
+      </div>
+  </div>
 
+  <div id="image-modal">
+      <button id="close-btn" onclick="closeImageModal()">X</button>
+      <button id="prev-btn" onclick="prevImage()">&#10094;</button>
+      <img id="modal-image" />
+      <button id="next-btn" onclick="nextImage()">&#10095;</button>
+  </div>
+
+  <script type="module" src="../js/captain-announcements.js"></script>
+
+  <script type="module">
+      import { openImageModal, closeImageModal, prevImage, nextImage } from "../js/captain-announcements.js";
+      window.openImageModal = openImageModal;
+      window.closeImageModal = closeImageModal;
+      window.prevImage = prevImage;
+      window.nextImage = nextImage;
+  </script>
 </body>
 </html>
