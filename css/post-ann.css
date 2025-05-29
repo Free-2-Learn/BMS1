@@ -61,19 +61,21 @@
 
 /* Announcement Input Styling */
 #announcement-input {
-  width: calc(100% - 20px); /* Full width with padding */
-  max-height: 150px; /* Limits expansion */
-  min-height: 50px; /* Default height */
+  width: 100%;
+  height: auto;
+  max-height: 150px;      
+  min-height: 80px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   padding: 10px;
   outline: none;
-  resize: none; /* Prevents manual resizing */
+  resize: none;           
+  overflow-y: auto;       
   display: block;
   margin: 10px auto;
-  overflow-y: auto; /* Enables scrollbar when content exceeds height */
-  white-space: pre-wrap; /* Retains spaces and line breaks */
+  white-space: pre-wrap;
+  box-sizing: border-box; 
 }
 
 /* Focus effect */
