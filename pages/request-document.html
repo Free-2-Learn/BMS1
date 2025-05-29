@@ -64,15 +64,21 @@
       border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s;
+    }
+
+    .request-btn:hover {
+      background-color: #0056b3;
     }
 
     .requests-container {
       background-color: rgba(255, 255, 255, 0.9);
       padding: 15px;
       border-radius: 10px;
-      margin: 30px auto;   /* centers horizontally */
+      margin: 30px auto;
       color: black;
-      max-width: 1000px;   /* limits width so it's not full width */
+      max-width: 1000px;
     }
 
     table {
@@ -90,7 +96,7 @@
     }
 
     #resident-name {
-      font-size: 1.5rem; /* Adjust size as needed */
+      font-size: 1.5rem;
       text-align: center;
       margin-bottom: 20px;
       text-shadow: 1px 1px 2px black;
@@ -104,24 +110,25 @@
     }
 
     a.back-btn {
-     position: fixed;
-     top: 20px;
-     left: 20px;
-     color: white;
-     padding: 12px 24px;
-     font-size: 1.2rem;
-     font-weight: bold;
-     text-decoration: underline;
-     z-index: 10;
-     background: none;   /* removed background */
-      box-shadow: none;   /* removed shadow */
-      cursor: pointer;
-    }
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 18px; /* Reduced padding */
+  font-size: 1rem;    /* Slightly smaller font */
+  font-weight: bold;
+  text-decoration: none;
+  z-index: 10;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, color 0.3s;
+}
 
-     a.back-btn:hover {
-     color: #ccc;  /* lighter on hover */
-     text-decoration: none;
-    }
+a.back-btn:hover {
+  background-color: #0056b3;
+  color: #e6e6e6;
+}
 
   </style>
 </head>
