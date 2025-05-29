@@ -1,25 +1,106 @@
+/* General Page Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Profile Dashboard Container - Make it bigger and with dark translucent bg */
+#profile-dashboard {
+  max-width: 900px;          /* Bigger max width */
+  margin: 2rem auto;         /* Center horizontally with vertical spacing */
+  padding: 2rem 3rem;        /* More padding */
+  background-color: rgba(0, 0, 0, 0.7);  /* Dark translucent background */
+  border-radius: 12px;       /* Rounded corners */
+  color: white;              /* White text */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Make all text inside profile dashboard white */
+#profile-dashboard p,
+#profile-dashboard strong,
+#profile-dashboard span,
+#profile-dashboard h1 {
+  color: white;
+}
+
+/* Header Section */
+#profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+#profile-header h1 {
+  margin: 0;
+  font-size: 2.5rem;  /* Bigger font size */
+  font-weight: 700;
+  color: white;
+}
+
+#edit-profile-btn {
+  padding: 0.8rem 1.3rem;
+  border: none;
+  background-color: #1e90ff; /* Brighter blue */
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1.1rem;
+}
+
+#edit-profile-btn:hover {
+  background-color: #104e8b;
+}
+
+/* Resident Info Section */
+#resident-info {
+  font-size: 1.25rem;       /* Bigger text size */
+  line-height: 1.6;         /* More spacing between lines */
+  padding: 20px;            /* More padding around the container */
+  max-width: 600px;         /* Optional: make it wider */
+  margin: 0 auto;           /* Center horizontally */
+  font-weight: 600;         /* Slightly bolder text */
+  color: #222;              /* Darker text for better visibility */
+}
+
+#resident-info p {
+  margin-bottom: 12px;      /* Space between paragraphs */
+}
+
 /* Modal Base */
 .modal {
-  display: none; 
+  display: none;
   position: fixed;
   z-index: 1000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4); 
+  background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
 }
 
-/* Modal Content Box */
+/* SHOW MODAL CLASS */
+.modal.show {
+  display: flex;
+}
+
+/* Modal Content */
 .modal-content {
   background-color: #fff;
-  margin: auto;
   padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 /* Form Styling */
@@ -39,7 +120,9 @@
   font-weight: 500;
 }
 
-.input-group input {
+.input-group input,
+form input,
+form select {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -64,8 +147,149 @@
 
 .cancel-btn {
   background-color: #f44336;
+  margin-top: 0.5rem;
 }
 
 .cancel-btn:hover {
   background-color: #d73833;
+}
+
+/* Smaller Edit Profile Modal */
+#edit-profile-modal .modal-content {
+  max-width: 350px;
+  padding: 20px 25px;
+  background-color: #000; /* Black background */
+  color: white;           /* White text */
+}
+
+/* Fix overlap on First and Middle Name */
+#edit-profile-form label[for="edit-first-name"],
+#edit-profile-form label[for="edit-middle-name"] {
+  display: block;
+  margin-bottom: 6px;
+  position: static !important;
+  float: none !important;
+}
+
+#edit-profile-form input#edit-first-name,
+#edit-profile-form input#edit-middle-name {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  position: static !important;
+  float: none !important;
+}
+
+/* Edit Profile Modal Inputs - Full width boxed style */
+#edit-profile-form input,
+#edit-profile-form select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1.2rem;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+  background-color: #fff;  /* white input background */
+  color: #000;             /* black text inside inputs */
+  transition: border-color 0.3s ease;
+}
+
+#edit-profile-form input:focus,
+#edit-profile-form select:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #f9faff;
+}
+
+/* Override label and button colors inside Edit Profile */
+#edit-profile-form label,
+#edit-profile-form button {
+  color: white;
+}
+
+/* Buttons inside Edit Profile modal */
+#edit-profile-form button {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  margin-top: 1rem;
+  border: none;
+  transition: 0.3s;
+}
+
+#edit-profile-form button:hover {
+  background-color: #45a049;
+}
+
+/* Back Link */
+a[href="dashboard-resident.html"] {
+  display: inline-block;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+a[href="dashboard-resident.html"]:hover {
+  text-decoration: underline;
+}
+
+/* === Change Password Modal Specific Styling === */
+#change-password-modal .modal-content {
+  background-color: #000; /* Black background */
+  color: white;           /* White text */
+}
+
+#change-password-modal h2,
+#change-password-modal label,
+#change-password-modal button,
+#change-password-modal input {
+  color: white !important;
+  font-family: Arial, sans-serif;
+}
+
+/* Inputs inside change password modal */
+#change-password-modal input {
+  background-color: #222; /* Dark background for inputs */
+  border: 1.5px solid #555;
+  padding: 10px 12px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* Buttons inside change password modal */
+#change-password-modal button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Modal overlay */
+#change-password-modal {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Background Video Styling */
+#background-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  object-fit: cover;
 }
