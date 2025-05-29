@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resident Dashboard</title>
   <link rel="stylesheet" href="../css/style.css" />
-  <script type="module" src="../js/resident-profile.js"></script>
 
   <style>
     html, body {
@@ -160,18 +159,17 @@
     <div class="button-row">
       <a href="residents-announcement.html">View Announcements</a>
       <a href="request-document.html">Request Document</a>
-      <a href="profile.html">View Profile</a>
+      <a href="profile.html" id="profile-button">View Profile</a>
       <button id="logout-button">Logout</button>
+    </div>
+
+    <!-- Profile dropdown menu placeholder -->
+    <div id="profile-menu" class="profile-menu" style="display:none;">
+      <!-- Your profile dropdown content here -->
     </div>
   </div>
 
-  <script>
-    document.getElementById("logout-button").addEventListener("click", function () {
-      localStorage.clear();
-      sessionStorage.clear();
-      window.location.href = "../index.html";
-    });
-  </script>
-
+  <!-- Move the script here, before closing body -->
+  <script type="module" src="../js/resident-profile.js"></script>
 </body>
 </html>
