@@ -46,15 +46,15 @@
 
 #edit-text {
   width: 100%;
-  min-height: 120px; /* allows room for padding and text */
-  background-color: rgba(0, 0, 0, 0.8); /* dark background */
-  color: #fff; /* white text */
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 12px;
   font-size: 16px;
-  resize: vertical; /* user can adjust height */
-  box-sizing: border-box; /* ensures padding doesn’t overflow */
+  resize: vertical;
+  outline: none;
   margin-bottom: 10px;
 }
 
