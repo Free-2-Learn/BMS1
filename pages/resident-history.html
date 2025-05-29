@@ -1,45 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Resident History</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <script type="module" src="../js/resident-history.js"></script>
+  <meta charset="UTF-8" />
+  <title>Resident History</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script type="module" src="../js/resident-history.js"></script>
+
+  <style>
+    /* Background video styling */
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      color: white;
+      background: black;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      gap: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    a.back-button {
+      justify-self: start;
+      color: #00cfff;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 10px 16px;
+      border: 1px solid #00cfff;
+      border-radius: 6px;
+      background-color: rgba(0, 0, 0, 0.6);
+      transition: background-color 0.3s ease;
+    }
+
+    a.back-button:hover {
+      background-color: #00cfff;
+      color: black;
+    }
+
+    h2 {
+      justify-self: center;
+      margin: 0;
+      text-shadow: 0 0 10px #00cfff;
+    }
+
+    #search-history {
+      justify-self: center;
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #00cfff;
+      color: black;
+      text-align: center;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    tbody tr:hover {
+      background-color: rgba(0, 255, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        grid-template-rows: auto auto auto auto;
+        padding: 10px;
+      }
+
+      #search-history {
+        width: 90%;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+    }
+  </style>
 </head>
 <body>
-  >
-    </table>
 
-    <a href="dashboard-captain.html"> Back</a>
+  <!-- Video background -->
+  <video autoplay muted loop id="background-video">
+    <source src="../images12/history.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="overlay"></div>
 
-    <h2>Resident History</h2>
+  <!-- Grid sections -->
+  <a href="dashboard-captain.html" class="back-button">← Back</a>
 
-    <input type="text" id="search-history" placeholder="Search deleted residents..." />
+  <h2>Resident History</h2>
 
-    <table>
-      <thead>
-          <tr>
-              <th>#</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Age</th>
-              <th>Birthdate</th>
-              <th>Gender</th>
-              <th>Civil Status</th>
-              <th>Contact</th>
-              <th>Address</th>
-              <th>Occupation</th>
-              <th>Education</th>
-              <th>Special Category</th>
-              <th>Voter Info</th>
-              <th>Actions</th>
-          </tr>
-      </thead>
-      <tbody id="history-body">
-          <!-- Archived residents will appear here -->
-      </tbody>
+  <input type="text" id="search-history" placeholder="Search deleted residents..." />
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Birthdate</th>
+        <th>Gender</th>
+        <th>Civil Status</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Occupation</th>
+        <th>Education</th>
+        <th>Special Category</th>
+        <th>Voter Info</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="history-body">
+      <!-- Archived residents will appear here -->
+    </tbody>
   </table>
-
 
 </body>
 </html>
