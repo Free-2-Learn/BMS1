@@ -19,7 +19,6 @@
       z-index: -1;
     }
 
-    /* Dark overlay */
     .video-overlay {
       position: fixed;
       top: 0;
@@ -30,7 +29,6 @@
       z-index: 0;
     }
 
-    /* Center layout */
     body {
       margin: 0;
       height: 100vh;
@@ -41,28 +39,26 @@
       background: black;
       color: white;
       text-align: center;
+      overflow: hidden;
     }
 
-    /* Dashboard container */
     .dashboard-container {
       position: relative;
       z-index: 1;
       color: white;
-      background-color: transparent;  /* Fully transparent */
-      padding: 60px 80px;
-      width: 800px;
-      max-width: 90%;
+      background-color: transparent;
+      padding: 60px 20px;
+      width: 100%;
+      max-width: 1200px;
       border-radius: 15px;
       text-align: center;
       font-size: 20px;
-      /* Glow effect on container text */
       text-shadow:
         0 0 10px #00cfff,
         0 0 20px #00cfff,
         0 0 30px #00cfff;
     }
 
-    /* Circular logo styling */
     .logo {
       width: 120px;
       height: 120px;
@@ -95,16 +91,20 @@
         0 0 12px #00cfff;
     }
 
-    /* Horizontal button row container */
+    /* Horizontal scroll row */
     .button-row {
       display: flex;
-      justify-content: center;
       gap: 30px;
-      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      justify-content: flex-start;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* Style for each button/link as a square box */
     .button-row a {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,7 +113,7 @@
       background-color: #007bff;
       color: white;
       text-decoration: none;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       border-radius: 15px;
       box-shadow:
@@ -121,8 +121,8 @@
         0 0 15px #00cfff;
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
-      text-align: center;
       padding: 20px;
+      text-align: center;
     }
 
     .button-row a:hover {
@@ -131,7 +131,16 @@
         0 0 20px #00cfff,
         0 0 40px #00cfff,
         0 0 60px #00cfff;
-      color: #fff;
+    }
+
+    /* Hide scrollbar for Webkit */
+    .button-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Optional: hide scrollbar for other browsers */
+    .button-row {
+      scrollbar-width: none; /* Firefox */
     }
   </style>
 </head>
@@ -142,14 +151,12 @@
     Your browser does not support the video tag.
   </video>
 
-  <!-- Dark overlay -->
+  <!-- Overlay -->
   <div class="video-overlay"></div>
 
-  <!-- Dashboard content -->
+  <!-- Dashboard -->
   <div class="dashboard-container">
-    <!-- Logo image -->
     <img src="../images8/logo101.jpg" alt="Captain Logo" class="logo" />
-
     <h2>Captain Dashboard</h2>
     <p>Welcome, Captain!</p>
 
@@ -157,6 +164,7 @@
       <a href="residents.html">Manage Residents</a>
       <a href="document-requests.html">Document Requests</a>
       <a href="captain-announcements.html">Announcements</a>
+      <a href="resident-history.html">Archived Residents</a>
       <a href="../index.html" id="logout-button">Logout</a>
     </div>
   </div>
